@@ -68,7 +68,7 @@ Show which value is contained in the test vector. To do this you will need to cr
 ```{r ex6}
 contain_x_y_z_vector <- c((x == test_vector) | (y == test_vector) | (z == test_vector))
 
-contain_x_y_z_vector[contain_x_y_z_vector == TRUE]
-
+#contain_x_y_z_vector[contain_x_y_z_vector == TRUE]
+which(contain_x_y_z_vector == TRUE)
 ```
 

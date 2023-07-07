@@ -110,4 +110,4 @@ sales_csv[1:10,5]
 
 first_class_df = sales_csv[(sales_csv$Ship.Mode=='First Class')|(sales_csv$City=='Henderson') ,]
 
-
+first_class_df = sales_csv[(sales_csv$Ship.Mode=='First Class') & (sales_csv$City=='Henderson') ,]
