@@ -1,7 +1,7 @@
 ---
 title: "Week 2 Exercises"
-author: "Your Name Here"
-date: "May 14, 2022"
+author: "Rebecca Hawthorne"
+date: "July 8, 2023"
 output: pdf_document
 ---
 
@@ -17,7 +17,7 @@ Read the sales_pipe.txt file into an R data frame as sales.
 
 ```{r}
 
-sales_pipe <- read.delim("Week_2/Data/sales_pipe.txt"
+sales_pipe <- read.delim("Data/sales_pipe.txt"
                               ,stringsAsFactors=FALSE
                               ,sep = "|"
                               )
@@ -42,7 +42,7 @@ colnames(sales_pipe) <- sales_pipe_colnames
 ```
 
 # Exercise 3
-Convert both Order.ID and Order.Date to date vectors within the sales data frame. What is the number of days between the most recent order and the oldest order?
+Convert both Ship.Date and Order.Date to date vectors within the sales data frame. What is the number of days between the most recent order and the oldest order?
 How many years is that?
 How many weeks?
 
@@ -51,9 +51,10 @@ How many weeks?
 ```{r}
 library(lubridate)
 
-#convert order.ID and Order.Date to date types
-sales_pipe$Order.ID <- as.Date(sales_pipe$Order.ID
-                                ,format='%m/%d/%Y'
+#convert Ship.Date and Order.Date to date types
+
+sales_pipe$Ship.Date <- as.Date(sales_pipe$Ship.Date
+                                ,format='%B %d %Y'
                                 )
 
 sales_pipe$Order.Date <- as.Date(sales_pipe$Order.Date
@@ -78,6 +79,10 @@ numeric_days_between <- as.numeric(days_between_oldest_and_youngest_orders)
 
 years_between_oldest_and_youngest_orders <- numeric_days_between / 365
 
+print(days_between_oldest_and_youngest_orders)
+print(weeks_between_oldest_and_youngest_orders)
+print(years_between_oldest_and_youngest_orders)
+
 ```
 
 
@@ -86,16 +91,12 @@ What is the average number of days it takes to ship an order?
 
 ```{r}
 
-#convert the ship date to date type
-sales_pipe$Ship.Date <- as.Date(sales_pipe$Ship.Date
-                                ,format='%B %d %Y'
-                                )
-
 #create vector of the number of days it takes to ship
 days_to_ship <- (sales_pipe$Ship.Date - sales_pipe$Order.Date)
 
 #calculate mean of the number of days to ship
 avg_days_to_ship <- mean(days_to_ship)
+print(avg_days_to_ship)
 
 ```
 
@@ -115,6 +116,8 @@ first_name_Bill <- customer_name_first_last[customer_name_first_last[,1]=="Bill"
 
 #count the length of the Bill vector
 number_of_Bills <- length(first_name_Bill)
+
+print(number_of_Bills)
 ```
 
 # Exercise 6
@@ -125,7 +128,7 @@ How many mentions of the word 'table' are there in the Product.Name column?
 
 library(stringr)
 #use sum to add all the times table was counted by str.count in each element
-number_of_table <- sum(str_count(sales_pipe$Product.Name, pattern = 'table'))
+print( sum(str_count(sales_pipe$Product.Name, pattern = 'table')))
 ```
 
 # Exercise 7
@@ -173,11 +176,10 @@ Find the average profit by order year.
 
 ```{r}
 # break the order.date into pieces and paste jsut the order year into the sales_pipe df
-order_date_broken_out <- stringr::str_split_fixed(string=sales_pipe$Order.Date,pattern='/',n=3)
+order_date_broken_out <- stringr::str_split_fixed(string=sales_pipe$Order.Date,pattern='-',n=3)
 
-sales_pipe$order_year <- paste(order_date_broken_out[,3])
+sales_pipe$order_year <- paste(order_date_broken_out[,1])
 
 #use aggregate to calculate the mean profit using order year as the grouping elements
 aggregate(sales_pipe$Profit, list(sales_pipe$order_year), FUN=mean)
 ```
-

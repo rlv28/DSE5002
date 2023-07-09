@@ -1,7 +1,7 @@
 ---
 title: "Week 1 Exercises"
-author: "Jeremiah Lowhorn"
-date: "May 9, 2022"
+author: "Rebecca Hawthorne"
+date: "July 8, 2023"
 output: pdf_document
 ---
 
@@ -24,7 +24,7 @@ Show that x is less than z but greater than y.
 **Note: your output must be a SINGLE boolean, do not output a boolean for each expression.**
 
 ```{r ex2}
-x < z & x > y
+(x < z) & (x > y)
 
 ```
 
@@ -35,6 +35,7 @@ Show that x and y do not equal z.
 
 ```{r ex3}
 (x != z) & (y != z)
+
 ```
 
 
@@ -44,7 +45,7 @@ Show that the formula `x + 2y = z`.
 **Note: your output must be a SINGLE boolean**
 
 ```{r ex4}
-x + 2*y == z
+(x + 2*y) == z
 
 ```
 
@@ -68,7 +69,7 @@ Show which value is contained in the test vector. To do this you will need to cr
 ```{r ex6}
 contain_x_y_z_vector <- c((x == test_vector) | (y == test_vector) | (z == test_vector))
 
-#contain_x_y_z_vector[contain_x_y_z_vector == TRUE]
+
 which(contain_x_y_z_vector == TRUE)
 ```
 
