@@ -39,7 +39,7 @@ furniture_profit_df.shape
 
 
 #subset of both rows and columns (we need to use .loc on the initial df as shown)
-
+#requyirement for row and then the state column
 row_col_df = df.loc[(df["Category"] =='Furniture') & (df["Profit"] < 0),'State']
 row_col_df.shape
 
@@ -57,6 +57,9 @@ df = df.drop(['StateAbbreviation','Year','OrderID'],axis=1)
 #long to wide
 wide_df = df.pivot(columns=['Category'],values=['Sales','Profit'])
 wide_df.head()
+#can add number of rows. can do .tail to get last
+
+
 # flattening the double index
 wide_df2 = wide_df.copy()
 wide_df2.columns = wide_df2.columns.to_flat_index()
@@ -70,7 +73,7 @@ long_df.head()
 ### aggregation
 # single variable, signle aggregation method
 df.groupby('Category')['Profit'].mean()
-
+#after catergory, as_index=fals, then categrory in not the index 
 #multiple aggregation methods
 df.groupby('Category')['Profit'].agg([np.mean, np.median, np.std])
 

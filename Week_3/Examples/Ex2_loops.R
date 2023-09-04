@@ -46,12 +46,18 @@ for(i in 1:5){
 
 for(j in 1:length(h)){
   hash_work <- hash_work + 1
-  x5 <- c(x5,paste(names(h)[j],h[[LETTERS[j]]],sep='_'))
+  x5 <- c(x5,paste(names(h)[j],h[[LETTERS[1]]],sep='_'))
 }
 print(hash_work)
 print(loop_work)
 #make sure we just made the same two vectors
 all(x4 == x5)
+
+names(h)[1] # calls the key
+h[[LETTERS[3]]] #calls value in the third value of letter
+h[['A']] #value for key A
+h # calls whole hash table
+
 
 # for loop with break statement
 for(i in 1:10) {                  # Head of for-loop

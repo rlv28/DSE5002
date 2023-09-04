@@ -2,12 +2,12 @@ library(dplyr)
 sales <- read.csv("Week_4/Data/sales.csv", stringsAsFactors=FALSE)
 
 names(sales)
-
+### . in pipe means that it inherits from pipe
 ### Using the Pipe
 sales %>% # the pipe  (%>%) allows you to write multi-line functions passing the same data to each line of code
-   rename(Row.ID = ï..Row.ID) %>%
-   slice_max(Row.ID) %>% #slice the rows with the maximum Row.ID (should be one row)
-   select(Row.ID) # select the single column Row.ID
+   rename(Row_ID = Row.ID) %>%
+   slice_max(Row_ID) %>% #slice the rows with the maximum Row.ID (should be one row)
+   select(Row_ID) # select the single column Row.ID
 
 
 #### Aggregation
@@ -15,7 +15,7 @@ sales %>% # the pipe  (%>%) allows you to write multi-line functions passing the
 #EX1
 #simple aggregation
 sales %>% 
- group_by(Segment) %>%
+ group_by(Segment, Region) %>%
  summarize(sum_of_sales = sum(Sales))
 
 #EX2
@@ -74,3 +74,5 @@ df1 %>% bind_cols(left_df)
 #stacking data frames ( bind rows)
    left_df %>% bind_rows(right_df)
 
+test = sales %>%
+  filter (Segment == "Home Office")

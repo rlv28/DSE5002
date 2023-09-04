@@ -17,7 +17,7 @@ Read the sales_pipe.txt file into an R data frame as sales.
 
 ```{r}
 
-sales_pipe <- read.delim("Week_2/Data/sales_pipe.txt"
+sales_pipe <- read.delim("Data/sales_pipe.txt"
                               ,stringsAsFactors=FALSE
                               ,sep = "|"
                               )
@@ -39,6 +39,7 @@ sales_pipe_colnames[1] <- 'Row.ID'
 #replace column names in sales_pipe df
 colnames(sales_pipe) <- sales_pipe_colnames
 
+#Answer Key: colnames[1] <- "Row.Id"
 ```
 
 # Exercise 3
@@ -126,6 +127,8 @@ How many mentions of the word 'table' are there in the Product.Name column?
 library(stringr)
 #use sum to add all the times table was counted by str.count in each element
 number_of_table <- sum(str_count(sales_pipe$Product.Name, pattern = 'table'))
+
+length(grep("(?i)table"))
 ```
 
 # Exercise 7

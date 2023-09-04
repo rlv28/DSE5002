@@ -7,6 +7,20 @@ output: pdf_document
 
 Please complete all exercises below. You may use any library that we have covered in class UP TO THIS POINT. 
 
+```{r}
+constraint_checker <- function(nums_vector, target){
+  # function to check that the vector and target are numeric and meet constraints
+  
+  if(is.numeric(nums_vector)&is.numeric(target)      #Check that all values are numeric
+     &(2<= length(nums_vector)&(length(nums_vector)<= 104)   #check that values meet constraints
+     & ( all(-109 <= nums_vector)) & (all(nums_vector<= 109))
+     & (-109 <= target) & (target <= 109))){ 
+      return (TRUE)
+  }
+  else {return (FALSE)}
+}
+```
+
 1) Two Sum - Write a function named two_sum()
 
 Given a vector of integers nums and an integer target, return indices of the two numbers such that they add up to target.
@@ -50,23 +64,22 @@ two_sum_shorter <- function(nums_vector,target){
   
   loop_work <- 0
   
-  if(is.numeric(nums_vector)&is.numeric(target)){             #Check that all values are numeric
+  if(constraint_checker(nums_vector, target)){             
     for(i in 1:(length(nums_vector)-1)) {                                            
       for(j in (i+1):length(nums_vector)) {                                          
         loop_work <- loop_work + 1
        
         if ((nums_vector[i] + nums_vector[j]) == target){
-          cat(i, j)
-          cat ('\n')
+          cat(i, j, '\n')  #AK-print(c(i,j))
         }
         
       }
     }
   } else{
-    stop("ERROR: All values in the vector and the target must be numeric.")
+    stop("ERROR: All values in the vector and the target must be numeric and meet given constraints.")
   }
   
-  return(loop_work)  
+  cat("Total work done is",loop_work)  
 }
 
 
@@ -91,23 +104,22 @@ two_sum <- function(nums_vector,target){
   
   loop_work_longer <- 0
   
-  if(is.numeric(nums_vector)&is.numeric(target)){             #Check that all values are numeric
+  if(constraint_checker(nums_vector, target)){             
     for(i in 1:(length(nums_vector))) {                                            
       for(j in 1:length(nums_vector)) {                                          
         loop_work_longer <- loop_work_longer + 1
        
         if (((nums_vector[i] + nums_vector[j]) == target)&(i != j)){
-          cat(i, j)
-          cat ('\n')
+          cat(i, j, '\n')
         }
         
       }
     }
   } else{
-    stop("ERROR: All values in the vector and the target must be numeric.")
+    stop("ERROR: All values in the vector and the target must be numeric and meet given constraints.")
   }
   
-  return(loop_work_longer)  
+  cat("Total work done is",loop_work_longer)   
 }
 
 
@@ -123,7 +135,7 @@ two_sum(nums_vector,target)
 #[1] 2 5
 #[1] 5 2
 ```
-The shorter version of the code saves half the steps! So unless you needed the code to check each pair of indices written both in ascending and descending order, I can use the shorter code to save work.
+The shorter version of the code saves over half the steps! So unless you needed the code to check each pair of indices written both in ascending and descending order, I can use the shorter code to save work.
 
 
 2) Now write the same function using hash tables.
@@ -136,39 +148,35 @@ Loop the array once to make a hash map of the value to its index. Then loop agai
 ```{r}
 two_sum <- function(nums_vector,target){
   
-   if(is.numeric(nums_vector)&is.numeric(target)){             #Check that all values are numeric
-    library(hash)
-    h <- hash()
+   if(constraint_checker(nums_vector, target)){            
      
-     for(i in 1:(length(nums_vector))) {                                            
-      for(j in 1:length(nums_vector)) {                                          
-        loop_work_longer <- loop_work_longer + 1
-       
-        if (((nums_vector[i] + nums_vector[j]) == target)&(i != j)){
-          cat(i, j)
-          cat ('\n')
-        }
-        
-      }
-    }
-  } else{
-    stop("ERROR: All values in the vector and the target must be numeric.")
-  }
-  
-  return(loop_work_longer)  
-}
+    library(hash)
+    complement_hash <- hash((target - nums_vector), 1:length(nums_vector))
+    
+
+    #check if numbers in nums_vector are equal to numbers in complement_hash and return indices
+     for(i in 1:(length(nums_vector))) {
+       if(nums_vector[i] %in% names(complement_hash)&
+          (nums_vector[i]!=(target-nums_vector[i]))) {
+         cat(i, complement_hash[[(as.character(nums_vector[i]))]], '\n')
+       }
+     
+
+     }
+      
   
 }
-
-
+else{
+    stop("ERROR: All values in the vector and the target must be numeric and meet given constraints.")}
+}
 # Test code
 nums_vector <- c(5,7,12,34,6,10,8,9)
 target <- 15
  
 two_sum(nums_vector,target)
 #expected answers
-#[1] 10  5
-#[1] 8 7
+#[1] 10  5     
+#[1] 8 7        
 #[1] 9 6
 #[1]  5 10
 #[1] 7 8

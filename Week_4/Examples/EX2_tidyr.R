@@ -30,7 +30,7 @@ head(fish_wide)
 #simply drop them
 fish_encounters %>%
   pivot_wider(names_from = station, values_from = seen) %>%
-  drop_na()
+  drop_na() #can pass a col name and it will only look in that column, can do multiple using comma
 
 #or replace them
 #simply drop them
@@ -49,7 +49,7 @@ sales <- sales %>%
   separate(Customer.Name,
            sep=' ',
            into=c('First.Name','Last.Name')
-           ,extra='merge')
+           ,extra='merge') #extra that don't fit merge onto last col
 head(data.frame(sales$First.Name[1:5],sales$Last.Name[1:5]))
 
 #conversely, we can combine these columns back together
